@@ -3,7 +3,9 @@ import User from "../Models/UserModel.js";
 
 export const isLoggedIn = async (req, res, next) => {
   try {
-    const token = req.cookies.jwt;
+    const token = req?.cookies?.jwt;
+    console.log(token);
+    
 
     if (!token) {
       return res.status(400).json({
@@ -20,7 +22,7 @@ export const isLoggedIn = async (req, res, next) => {
       });
     }
 
-    const user = User.findById(decodedToken.userId).select("-password");
+    const user = await User.findById(decodedToken.userId).select("-password");
     if (!user)
       return res
         .status(401)

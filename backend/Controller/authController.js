@@ -20,6 +20,7 @@ export const register = async (req, res) => {
 
     if (user) {
       return res.status(500).json({
+        success:false,
         message: "Username and email already exist",
       });
     }
