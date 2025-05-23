@@ -2,6 +2,7 @@ import express, { urlencoded } from 'express'
 import dotenv from "dotenv"
 import DbConnect from './DB/dbConnect.js';
 import authRouter from "./Routes/authRoutes.js"
+import messageRoute from "./Routes/messageRoutes.js"
 
 const app=express()
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use('/api/auth', authRouter)
+app.use('/api/message', messageRoute)
 
 
 app.get("/",(req, res)  =>{
