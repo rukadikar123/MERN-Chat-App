@@ -16,11 +16,6 @@ const UserSchema=mongoose.Schema({
         required:true,
         unique:true
     },
-    gender:{
-         type:String,
-        required:true,
-        enum:["male","female"]
-    },
     password:{
         type:String,
         required:true,
@@ -28,7 +23,6 @@ const UserSchema=mongoose.Schema({
     },
     profilepic:{
         type:String,
-        required:true,
         default:""
     }
 

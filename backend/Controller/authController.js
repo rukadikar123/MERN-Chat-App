@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { JWTToken } from "../utils/jsonwebtoken.js";
 
 export const register = async (req, res) => {
-  const { fullname, username, email, password, profilepic, gender } = req.body;
+  const { fullname, username, email, password } = req.body;
 
   if (
     ![fullname, username, email, password].every(
@@ -27,20 +27,18 @@ export const register = async (req, res) => {
 
     const hashPassword = bcrypt.hashSync(password, 10);
 
-    const profileBoy =
-      profilepic ||
-      `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    const profileGirl =
-      profilepic ||
-      `https://avatar.iran.liara.run/public/girl?username=${username}`;
+    // const profileBoy =
+    //   profilepic ||
+    //   `https://avatar.iran.liara.run/public/boy?username=${username}`;
+    // const profileGirl =
+    //   profilepic ||
+    //   `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
     const newUser = await User.create({
       fullname,
       username,
       email,
       password: hashPassword,
-      gender,
-      profilepic: gender == "male" ? profileBoy : profileGirl,
     });
 
     if (newUser) {
@@ -54,7 +52,7 @@ export const register = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error,
     });
   }
 };
@@ -101,9 +99,9 @@ export const UserLogin = async (req, res) => {
 
 
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       success: false,
-      message: error.message,
+      message: `login error : ${error}`,
     });
   }
 };
@@ -124,7 +122,7 @@ export const UserLogout=async(req,res)=>{
   } catch (error) {
     res.status(400).json({
       success:false,
-      message:error.message
+      message: `logout error : ${error}`,
     })
   }
 }
