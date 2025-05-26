@@ -3,10 +3,10 @@ import bcrypt from "bcryptjs";
 import { JWTToken } from "../utils/jsonwebtoken.js";
 
 export const register = async (req, res) => {
-  const { fullname, username, email, password } = req.body;
+  const {username, email, password } = req.body;
 
   if (
-    ![fullname, username, email, password].every(
+    ![ username, email, password].every(
       (field) => typeof field === "string" && field.trim() !== ""
     )
   ) {
@@ -35,7 +35,6 @@ export const register = async (req, res) => {
     //   `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
     const newUser = await User.create({
-      fullname,
       username,
       email,
       password: hashPassword,
