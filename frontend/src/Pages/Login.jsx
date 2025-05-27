@@ -58,10 +58,11 @@ function Login() {
             placeholder="Password"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700 "
           />
-          {error && <p>{error}</p>}
+          {error && <p className='text-red-600'>{error}</p>}
           <button
             type="submit"
-            className="px-4 py-2 text-lg rounded-xl mt-6 bg-blue-500 text-white shadow-lg shadow-gray-400 hover:shadow-inner w-[200px] font-semibold"
+            disabled={loading}
+            className="px-4 py-2 text-lg rounded-xl mt-4 bg-blue-500 text-white shadow-lg shadow-gray-400 hover:shadow-inner w-[200px] font-semibold"
           >
             {loading ? "Loading...." : "Login"}
           </button>

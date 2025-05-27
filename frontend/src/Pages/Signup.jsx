@@ -48,8 +48,8 @@ function Signup() {
               <input value={userName} onChange={(e)=>setUserName(e.target.value)}   type="text" placeholder='UserName'  className='w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700'/>
               <input value={email} onChange={(e)=>setEmail(e.target.value)}  type="email" placeholder='Email'  className='w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700'/>
               <input value={password} onChange={(e)=>setPassword(e.target.value)}  type="password" placeholder='Password'  className='w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700 '/>
-              {error && <p>{error}</p>}
-              <button className='px-4 py-2 text-lg rounded-xl mt-6 bg-blue-500 text-white shadow-lg shadow-gray-400 hover:shadow-inner w-[200px] font-semibold'>{loading ? "Loading....": "SignUp"}</button>
+              {error && <p className='text-red-600'>{error}</p>}
+              <button type='submit' disabled={loading} className='px-4 py-2 text-lg rounded-xl mt-6 bg-blue-500 text-white shadow-lg shadow-gray-400 hover:shadow-inner w-[200px] font-semibold'>{loading ? "Loading....": "SignUp"}</button>
               <p className='text-md'>Already Have An Account ? <span className='font-semibold hover:cursor-pointer hover:text-blue-600 text-blue-400' onClick={()=>navigate('/login')}>Login</span></p>
           </form>
         </div>
