@@ -3,8 +3,10 @@ import dotenv from "dotenv"
 import DbConnect from './DB/dbConnect.js';
 import authRouter from "./Routes/authRoutes.js"
 import messageRoute from "./Routes/messageRoutes.js"
+import userRoute from './Routes/userRoutes.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+
 
 const app=express()
 
@@ -21,6 +23,7 @@ app.use(cookieParser())
 
 
 app.use('/api/auth', authRouter)
+app.use('/api/user', userRoute)
 app.use('/api/message', messageRoute)
 
 

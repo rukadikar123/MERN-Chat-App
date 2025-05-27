@@ -51,7 +51,7 @@ export const register = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error,
+      message: `signup error : ${error.message}`,
     });
   }
 };
@@ -100,7 +100,7 @@ export const UserLogin = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: `login error : ${error}`,
+      message: `login error : ${error.message}`,
     });
   }
 };
@@ -121,7 +121,7 @@ export const UserLogout=async(req,res)=>{
   } catch (error) {
     res.status(400).json({
       success:false,
-      message: `logout error : ${error}`,
+      message: `logout error : ${error.message}`,
     })
   }
 }
