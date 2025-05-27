@@ -28,6 +28,8 @@ function Login() {
     } catch (error) {
       console.log(error);
       SetLoading(false);
+      setEmail("")
+      setPassword("")
       setError(error.response.data.message);
     }
   };
@@ -58,7 +60,7 @@ function Login() {
             placeholder="Password"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700 "
           />
-          {error && <p className='text-red-600'>{error}</p>}
+          {error && !email && !password && <p className='text-red-600'>{error}</p>}
           <button
             type="submit"
             disabled={loading}
