@@ -23,13 +23,10 @@ function Login() {
       SetLoading(false);
       setEmail("");
       setPassword("");
-      setError(null)
-
+      setError(null);
     } catch (error) {
       console.log(error);
       SetLoading(false);
-      setEmail("")
-      setPassword("")
       setError(error.response.data.message);
     }
   };
@@ -48,19 +45,25 @@ function Login() {
         >
           <input
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (error) setError(null);
+            }}
             type="email"
             placeholder="Email"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700"
           />
           <input
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (error) setError(null);
+            }}
             type="password"
             placeholder="Password"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700 "
           />
-          {error && !email && !password && <p className='text-red-600'>{error}</p>}
+          {error && <p className='text-red-600'>{error}</p>}
           <button
             type="submit"
             disabled={loading}
