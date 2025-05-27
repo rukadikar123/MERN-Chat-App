@@ -27,12 +27,6 @@ export const register = async (req, res) => {
 
     const hashPassword = bcrypt.hashSync(password, 10);
 
-    // const profileBoy =
-    //   profilepic ||
-    //   `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    // const profileGirl =
-    //   profilepic ||
-    //   `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
     const newUser = await User.create({
       username,
