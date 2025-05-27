@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setUserData } from "../Redux/UserSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -9,6 +11,9 @@ function Login() {
   const [error, setError] = useState(null);
 
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,6 +25,7 @@ function Login() {
         { withCredentials: true }
       );
       console.log(result);
+      dispatch(setUserData(result?.data));
       SetLoading(false);
       setEmail("");
       setPassword("");
@@ -63,7 +69,7 @@ function Login() {
             placeholder="Password"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700 "
           />
-          {error && <p className='text-red-600'>{error}</p>}
+          {error && <p className="text-red-600">{error}</p>}
           <button
             type="submit"
             disabled={loading}

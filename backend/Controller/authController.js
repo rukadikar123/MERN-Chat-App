@@ -43,9 +43,10 @@ export const register = async (req, res) => {
     if (newUser) {
       JWTToken(newUser._id, res);
     }
-
+    newUser.password=undefined
     res.status(200).json({
       success: true,
+      user:newUser,
       message: "user Created successfully",
     });
   } catch (error) {
