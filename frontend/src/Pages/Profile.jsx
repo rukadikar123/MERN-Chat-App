@@ -45,6 +45,7 @@ function Profile() {
       setSaving(false);
       dispatch(setUserData(result?.data));
       console.log("result data:", result.data);
+      navigate('/')
     } catch (error) {
       console.log(error);
       setSaving(false);

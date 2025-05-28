@@ -26,6 +26,7 @@ function Login() {
       );
       console.log(result);
       dispatch(setUserData(result?.data));
+      navigate('/')
       SetLoading(false);
       setEmail("");
       setPassword("");

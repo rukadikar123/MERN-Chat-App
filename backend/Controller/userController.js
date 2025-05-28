@@ -51,3 +51,21 @@ export const editProfile = async (req, res) => {
     });
   }
 };
+
+
+export const getOtherUsers=async(req, res)=>{
+  try {
+    const users=await User.find({
+      _id:{$ne:req.user._id}
+    }).select("-password")
+    return res.status(200).json({
+      success:true,
+      users
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:`other user error: ${error.message}`
+    })
+  }
+}
