@@ -6,12 +6,14 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import dp from "../assets/dp.webp";
 import { useState } from "react";
 import axios from "axios";
-import { setOtherUsers, setUserData } from "../Redux/UserSlice";
+import { setOtherUsers, setSelectedUser, setUserData } from "../Redux/UserSlice";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const userData = useSelector((state) => state?.user?.userData);
   const otherUsers = useSelector((state) => state?.user?.otherUsers);
+    const selectedUser=useSelector(state=>state?.user?.selectedUser)
+  
   const [search, setSearch] = useState(false);
 
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ function Sidebar() {
   };
 
   return (
-    <div className="md:w-[25%] w-full h-full bg-slate-300 ">
+    <div className={`md:w-[25%] w-full h-full bg-slate-300 ${selectedUser ? "hidden": "block"} lg:block `} >
       <div className="w-[50px] mt-2 h-[50px] bg-red-500 rounded-full shadow-gray-600 flex justify-center fixed bottom-2 items-center overflow-hidden cursor-pointer hover:shadow-inner shadow-lg">
         <RiLogoutBoxLine
           onClick={handleLogout}
@@ -80,7 +82,7 @@ function Sidebar() {
           )}
           {!search &&
             otherUsers?.users?.map((user) => (
-              <div
+              <div 
                 key={user._id}
                 className="w-[40px] h-[40px] mt-2 rounded-full shadow-gray-600 flex justify-center items-center overflow-hidden shadow-lg"
               >
@@ -95,9 +97,8 @@ function Sidebar() {
       </div>
       <div className="w-full h-[52vh] overflow-auto flex flex-col gap-4 p-2 mt-2">
         {otherUsers?.users?.map((user) => (
-          <div key={user._id} className="w-[95%] h-[60px] flex justify-start items-center gap-4 bg-white shadow-gray-600 rounded-full shadow-md p-2 hover:bg-blue-300 cursor-pointer">
-            <div
-              
+          <div onClick={()=>dispatch(setSelectedUser(user))} key={user._id} className="w-[95%] h-[60px] flex justify-start items-center gap-4 bg-white shadow-gray-600 rounded-full shadow-md p-2 hover:bg-blue-300 cursor-pointer">
+            <div 
               className="w-[50px] h-[50px]  rounded-full  flex justify-center items-center overflow-hidden "
             >
               <img
