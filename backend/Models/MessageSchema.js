@@ -2,25 +2,25 @@ import mongoose from "mongoose";
 
 const MessageSchema = mongoose.Schema(
   {
-    senderId: {
+    sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    recieverId: {
+    reciever: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     message: {
       type: String,
-      required: true,
+      default:""
     },
-    conversationId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Conversation",
-        default:[]
+    image:{
+      type:String,
+      default:""
     }
+    
 
 
   },
