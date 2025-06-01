@@ -18,7 +18,7 @@ export const isLoggedIn = async (req, res, next) => {
     if (!decodedToken) {
       return res.status(400).json({
         success: false,
-        message: "Unauthorize-Invalid token",
+        message: "Unauthorize-Invalid token", 
       });
     }
 
