@@ -24,7 +24,7 @@ function Login() {
         { email, password },
         { withCredentials: true }
       );
-      console.log(result);
+      console.log("login result",result);
       dispatch(setUserData(result?.data));
       navigate('/')
       SetLoading(false);
@@ -37,6 +37,7 @@ function Login() {
       setError(error.response.data.message);
     }
   };
+  
 
   return (
     <div className="w-full h-[100vh] bg-slate-200  flex items-center justify-center">

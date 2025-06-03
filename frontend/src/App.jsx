@@ -1,17 +1,19 @@
 import {Navigate, Route,Routes} from 'react-router-dom'
 import Signup from "./Pages/Signup"
 import Login from "./Pages/Login"
-import getCurrentUser from './custom-hooks/getCurrentUser'
+import useGetCurrentUser from './custom-hooks/useGetCurrentUser'
 import { useSelector } from 'react-redux'
 import Home from './Pages/Home'
 import Profile from './Pages/Profile'
-import getOtherUsers from './custom-hooks/getOtherUsers'
+import useGetOtherUsers from './custom-hooks/useGetOtherUsers'
+import useGetMessages from './custom-hooks/useGetMessages'
 
 
 
 function App() {
-  getCurrentUser()
-  getOtherUsers()
+  useGetCurrentUser()
+  useGetOtherUsers()
+  useGetMessages()
   const userData=useSelector(state=>state?.user?.userData)
 
   return (

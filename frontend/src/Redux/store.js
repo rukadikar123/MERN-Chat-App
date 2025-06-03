@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
 import UserReducer from './UserSlice.js'
+import messageReducer from './MessageSlice.js'
 
 export const store=configureStore({
     reducer:{
-        user:UserReducer
+        user:UserReducer,
+        message:messageReducer
     }
 })
