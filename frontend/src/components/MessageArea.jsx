@@ -40,6 +40,9 @@ function MessageArea() {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
+    if (input.length == 0 && backendImage==null) {
+      return;
+    }
     try {
       let formData = new FormData();
       formData.append("message", input);
@@ -54,25 +57,25 @@ function MessageArea() {
         }
       );
 
-      dispatch(setMessages([...messages,response?.data?.newMessage]));
+      dispatch(setMessages([...messages, response?.data?.newMessage]));
 
       // console.log("sendmessage log", response.data?.newMessage);
       setFrontendImage(null);
       setBackendImage(null);
       setInput("");
+      setShowPicker(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    socket.on("newMessage",(mess)=>{
-      dispatch(setMessages([...messages,mess]))
-    })
+    socket.on("newMessage", (mess) => {
+      dispatch(setMessages([...messages, mess]));
+    });
 
-    return ()=> socket.off("newMessage")
-  }, [messages,setMessages])
-  
+    return () => socket.off("newMessage");
+  }, [messages, setMessages]);
 
   const onEmojiClick = (data) => {
     setInput((prev) => prev + data?.emoji);
@@ -107,20 +110,33 @@ function MessageArea() {
               </h1>
             </div>
           </div>
-          <div className="h-[560px] w-full flex flex-col gap-4 pt-10 p-4 overflow-auto">
+          <div className="h-[75vh] w-full flex flex-col gap-4 pt-10 p-4 overflow-auto">
             {showPicker && (
               <div className="absolute bottom-24 left-6">
                 <EmojiPicker
                   onEmojiClick={onEmojiClick}
-                  className="shadow-lg"
+                  className="shadow-lg z-[50]"
                   width={250}
                   height={350}
                 />
               </div>
             )}
-           {messages &&  messages.map((mess)=>(
-            mess?.sender===userData?.user?._id ? <SenderMessage key={mess._id} message={mess?.message} image={mess?.image} /> : <RecieverMessage key={mess._id}  message={mess?.message} image={mess?.image} />
-           ))}
+            {messages &&
+              messages.map((mess) =>
+                mess?.sender === userData?.user?._id ? (
+                  <SenderMessage
+                    key={mess._id}
+                    message={mess?.message}
+                    image={mess?.image}
+                  />
+                ) : (
+                  <RecieverMessage
+                    key={mess._id}
+                    message={mess?.message}
+                    image={mess?.image}
+                  />
+                )
+              )}
           </div>
         </div>
       )}
@@ -143,7 +159,7 @@ function MessageArea() {
             className="w-[95%] lg:w-[70%] h-[60px] flex items-center gap-6 px-4 bg-blue-600 rounded-full shadow-lg shadow-gray-400"
           >
             <div onClick={() => setShowPicker((prev) => !prev)}>
-              <RiEmojiStickerLine className="text-white text-xl cursor-pointer" />
+              <RiEmojiStickerLine className="text-white text-xl  cursor-pointer" />
             </div>
             <input
               type="file"
@@ -162,9 +178,11 @@ function MessageArea() {
             <div onClick={() => imageRef.current.click()}>
               <FaImages className="text-white text-xl cursor-pointer" />
             </div>
-            <button type="submit">
-              <IoSend className="text-white text-3xl cursor-pointer" />
-            </button>
+            {(input?.length > 0 || backendImage!=null) && (
+              <button type="submit">
+                <IoSend className="text-white text-3xl cursor-pointer" />
+              </button>
+            )}
           </form>
         )}
       </div>
