@@ -1,6 +1,8 @@
 import Conversation from "../Models/ConversationModel.js";
 import Message from "../Models/MessageSchema.js";
+import { getRecieverSocketId } from "../Socket/socket.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
+import {io} from '../Socket/socket.js'
 
 export const sendMessage = async (req, res) => {
   try {
@@ -33,6 +35,12 @@ export const sendMessage = async (req, res) => {
       await conversation.messages.push(newMessage._id);
       await conversation.save();
     }
+
+  const recieverSocketId=getRecieverSocketId(reciever)
+
+    if(recieverSocketId){
+      io.to(recieverSocketId).emit("newMessage",newMessage)
+    }  
 
     return res.status(201).json({
       success: true,
@@ -73,3 +81,4 @@ export const getMessages = async (req, res) => {
     });
   }
 };
+

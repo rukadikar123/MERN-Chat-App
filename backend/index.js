@@ -6,9 +6,9 @@ import messageRoute from "./Routes/messageRoutes.js"
 import userRoute from './Routes/userRoutes.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+import { app, server } from './Socket/socket.js';
 
 
-const app=express()
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ app.get("/",(req, res)  =>{
 
 
 const PORT=process.env.PORT ||3000
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`server running at ${PORT}`);
     
 })

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setUserData } from "../Redux/UserSlice";
+import { setSelectedUser, setUserData } from "../Redux/UserSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -26,6 +26,7 @@ function Login() {
       );
       console.log("login result",result);
       dispatch(setUserData(result?.data));
+      dispatch(setSelectedUser(null));
       navigate('/')
       SetLoading(false);
       setEmail("");

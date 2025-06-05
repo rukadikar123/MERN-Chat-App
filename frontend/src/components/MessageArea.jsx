@@ -12,14 +12,16 @@ import { setSelectedUser } from "../Redux/UserSlice";
 import SenderMessage from "./SenderMessage";
 import RecieverMessage from "./RecieverMessage";
 import { setMessages } from "../Redux/MessageSlice";
+import { useEffect } from "react";
 
 function MessageArea() {
   const selectedUser = useSelector((state) => state?.user?.selectedUser);
   const userData = useSelector((state) => state?.user?.userData);
-  console.log("userData ", userData?._id);
+  const socket = useSelector((state) => state?.user?.socket);
+  // console.log("userData ", userData?._id);
 
   const messages = useSelector((state) => state?.message?.messages);
-  console.log("messages all:", messages);
+  // console.log("messages all:", messages);
 
   const [showPicker, setShowPicker] = useState(false);
   const [input, setInput] = useState("");
@@ -54,7 +56,7 @@ function MessageArea() {
 
       dispatch(setMessages([...messages,response?.data?.newMessage]));
 
-      console.log("sendmessage log", response.data?.newMessage);
+      // console.log("sendmessage log", response.data?.newMessage);
       setFrontendImage(null);
       setBackendImage(null);
       setInput("");
@@ -62,6 +64,15 @@ function MessageArea() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    socket.on("newMessage",(mess)=>{
+      dispatch(setMessages([...messages,mess]))
+    })
+
+    return ()=> socket.off("newMessage")
+  }, [messages,setMessages])
+  
 
   const onEmojiClick = (data) => {
     setInput((prev) => prev + data?.emoji);
@@ -96,7 +107,7 @@ function MessageArea() {
               </h1>
             </div>
           </div>
-          <div className="h-[560px] w-full flex flex-col gap-2 pt-10 p-4 overflow-auto">
+          <div className="h-[560px] w-full flex flex-col gap-4 pt-10 p-4 overflow-auto">
             {showPicker && (
               <div className="absolute bottom-24 left-6">
                 <EmojiPicker
@@ -107,7 +118,7 @@ function MessageArea() {
                 />
               </div>
             )}
-           {messages?.map((mess)=>(
+           {messages &&  messages.map((mess)=>(
             mess?.sender===userData?.user?._id ? <SenderMessage key={mess._id} message={mess?.message} image={mess?.image} /> : <RecieverMessage key={mess._id}  message={mess?.message} image={mess?.image} />
            ))}
           </div>
