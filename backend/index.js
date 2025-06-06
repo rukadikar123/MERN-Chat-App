@@ -14,7 +14,7 @@ dotenv.config();
 
 DbConnect()
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://mern-chat-app-1-98ek.onrender.com',
     credentials:true
 }))
 app.use(express.json())
