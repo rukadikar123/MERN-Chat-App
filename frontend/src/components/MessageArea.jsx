@@ -98,7 +98,7 @@ function MessageArea() {
               />
             </div>
             <div className="flex gap-4 items-center ">
-              <div className="w-[50px] h-[50px] rounded-full shadow-gray-600 flex justify-center items-center overflow-hidden cursor-pointer shadow-lg">
+              <div className="md:w-[50px] w-[40px] md:h-[50px] h-[40px] rounded-full shadow-gray-600 flex justify-center items-center overflow-hidden cursor-pointer shadow-lg">
                 <img
                   src={selectedUser?.profilepic || dp}
                   alt="dp Image"

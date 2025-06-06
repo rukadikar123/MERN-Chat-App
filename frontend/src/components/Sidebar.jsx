@@ -73,7 +73,7 @@ function Sidebar() {
           className="h-[25px] w-[25px] "
         />
       </div>
-     {query?.length>0 &&  <div className=" flex w-[25%] h-[350px] py-4 absolute top-[290px] bg-white overflow-y-auto flex-col gap-4 items-center z-[150]">
+     {query?.length>0 &&  <div className=" flex w-full md:w-[25%] h-[500px] md:h-[350px] py-4 absolute top-[290px] bg-white overflow-y-auto flex-col gap-4 items-center z-[150]">
         {searchData?.users?.filter((user)=>user?._id !== userData?.user?._id).map((user) =>  (
         
           <div
