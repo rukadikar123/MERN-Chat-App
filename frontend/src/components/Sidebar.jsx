@@ -17,6 +17,7 @@ function Sidebar() {
   const userData = useSelector((state) => state?.user?.userData);
   const otherUsers = useSelector((state) => state?.user?.otherUsers);
   const selectedUser = useSelector((state) => state?.user?.selectedUser);
+  const onlineUsers = useSelector((state) => state?.user?.onlineUsers);
 
   const [search, setSearch] = useState(false);
 
@@ -50,7 +51,7 @@ function Sidebar() {
           className="h-[25px] w-[25px] "
         />
       </div>
-      <div className="w-full h-[280px] px-2 bg-blue-400 rounded-b-[25%] shadow-lg shadow-gray-300 flex flex-col gap-2  justify-center ">
+      <div className="w-full h-[280px] px-2 bg-blue-400 rounded-b-[25%] shadow-lg  shadow-gray-300 flex flex-col gap-2  justify-center ">
         <h1 className="text-xl text-white font-semibold">Chat App</h1>
         <div className="w-full flex items-center justify-between">
           <h1 className="text-lg text-gray-700 font-semibold">
@@ -65,13 +66,13 @@ function Sidebar() {
             />
           </div>
         </div>
-        <div className="flex w-full items-center gap-2 flex-wrap">
+        <div className="flex w-full items-center  gap-2 overflow-y-hidden overflow-x-auto ">
           {!search && (
             <div
               onClick={() => setSearch(true)}
-              className="w-[50px] mt-2 h-[50px] bg-white rounded-full shadow-gray-600 flex justify-center items-center overflow-hidden shadow-lg"
+              className="w-[50px] mt-2 h-[50px]  rounded-full shadow-gray-400 flex justify-center items-center overflow-hidden shadow-lg"
             >
-              <IoIosSearch className="h-[25px] w-[25px]" />
+              <IoIosSearch className="h-[25px] w-[25px] text-white" />
             </div>
           )}
           {search && (
@@ -89,10 +90,37 @@ function Sidebar() {
             </form>
           )}
           {!search &&
-            otherUsers?.users?.map((user) => (
+            otherUsers?.users?.map(
+              (user) =>
+                onlineUsers?.includes(user._id) && (
+                  <div onClick={() => dispatch(setSelectedUser(user))} className="relative rounded-full mt-2 cursor-pointer shadow-gray-600  shadow-lg  flex items-center justify-center">
+                    <div
+                      key={user._id}
+                      className="w-[40px] h-[40px] rounded-full flex justify-center items-center overflow-hidden"
+                    >
+                      <img
+                        src={user?.profilepic || dp}
+                        alt="dp Image"
+                        className="w-full h-full  "
+                      />
+                    </div>
+                    <span className="h-[12px] w-[12px] rounded-full bg-green-500 absolute bottom-[-1px] right-[-1px] shadow-gray-600  shadow-lg "></span>
+                  </div>
+                )
+            )}
+        </div>
+      </div>
+      <div className="w-full md:h-[52vh] h-[62vh] overflow-auto flex flex-col gap-4 p-2 mt-2 ">
+        {otherUsers?.users?.map((user) => (
+          <div
+            onClick={() => dispatch(setSelectedUser(user))}
+            key={user._id}
+            className="w-[95%] h-[60px] flex justify-start items-center gap-4 bg-white shadow-gray-600 rounded-full shadow-md p-2 hover:bg-blue-300 cursor-pointer"
+          >
+            <div className="relative rounded-full mt-2  shadow-gray-600  shadow-lg  flex items-center justify-center">
               <div
                 key={user._id}
-                className="w-[40px] h-[40px] mt-2 rounded-full shadow-gray-600 flex justify-center items-center overflow-hidden shadow-lg"
+                className="w-[40px] h-[40px] rounded-full flex justify-center items-center overflow-hidden"
               >
                 <img
                   src={user?.profilepic || dp}
@@ -100,22 +128,9 @@ function Sidebar() {
                   className="w-full h-full  "
                 />
               </div>
-            ))}
-        </div>
-      </div>
-      <div className="w-full h-[52vh] overflow-auto flex flex-col gap-4 p-2 mt-2">
-        {otherUsers?.users?.map((user) => (
-          <div
-            onClick={() => dispatch(setSelectedUser(user))}
-            key={user._id}
-            className="w-[95%] h-[60px] flex justify-start items-center gap-4 bg-white shadow-gray-600 rounded-full shadow-md p-2 hover:bg-blue-300 cursor-pointer"
-          >
-            <div className="w-[50px] h-[50px]  rounded-full  flex justify-center items-center overflow-hidden ">
-              <img
-                src={user?.profilepic || dp}
-                alt="dp Image"
-                className="w-full h-full  "
-              />
+              {onlineUsers?.includes(user._id) && (
+                <span className="h-[12px] w-[12px] rounded-full bg-green-500 absolute bottom-[-1px] right-[-1px] shadow-gray-600  shadow-lg "></span>
+              )}{" "}
             </div>
             <h1 className="text-gray-700 text-md font-medium">
               {user?.name || user?.username}
