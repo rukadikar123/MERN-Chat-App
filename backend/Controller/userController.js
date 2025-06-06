@@ -69,3 +69,36 @@ export const getOtherUsers=async(req, res)=>{
     })
   }
 }
+
+export const Search=async(req,res)=>{
+  try {
+    let {query}=req.query;
+
+    if(!query){
+      return res.status(400).json({
+        success:false,
+        message:"Query is Required"
+      })
+    }
+
+    let users=await User.find({
+      $or:[
+        {name:{$regex:query,$options:"i"}},
+        {username:{$regex:query,$options:"i"}}
+      ]
+    }).select("-password")
+
+    return res.status(200).json({
+      success:true,
+      users,
+      message:"user find successfully"
+    })
+
+
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:`Search error: ${error.message}`
+    })
+  }
+}
