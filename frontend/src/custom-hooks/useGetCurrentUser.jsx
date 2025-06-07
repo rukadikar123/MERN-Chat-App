@@ -13,7 +13,7 @@ const useGetCurrentUser=()=> {
         try {
             let result=await axios.get(`${import.meta.env.VITE_API_URL}/api/user/current`,{withCredentials:true})
             dispatch(setUserData(result?.data))
-            console.log(`getcurrent user data: ${result?.data}`);
+            console.log('getcurrent user data:', result?.data);
             
         } catch (error) {
             console.log(error);
