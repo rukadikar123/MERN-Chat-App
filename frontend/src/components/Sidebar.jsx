@@ -73,38 +73,42 @@ function Sidebar() {
           className="h-[25px] w-[25px] "
         />
       </div>
-     {query?.length>0 &&  <div className=" flex w-full md:w-[25%] h-[500px] md:h-[350px] py-4 absolute top-[290px] bg-white overflow-y-auto flex-col gap-4 items-center z-[150]">
-        {searchData?.users?.filter((user)=>user?._id !== userData?.user?._id).map((user) =>  (
-        
-          <div
-            onClick={() => {dispatch(setSelectedUser( user))
-              setQuery("")
-              setSearch(false)
-            }}
-            key={user._id}
-            className="w-[95%] h-[60px] flex justify-start items-center gap-4 bg-white shadow-gray-600 rounded-full shadow-md p-2 hover:bg-blue-300 cursor-pointer"
-          >
-            <div className="relative rounded-full mt-2  shadow-gray-600  shadow-lg  flex items-center justify-center">
+      {query?.length > 0 && (
+        <div className=" flex w-full md:w-[25%] h-[500px] md:h-[350px] py-4 absolute top-[290px] bg-white overflow-y-auto flex-col gap-4 items-center z-[150]">
+          {searchData?.users
+            ?.filter((user) => user?._id !== userData?.user?._id)
+            .map((user) => (
               <div
+                onClick={() => {
+                  dispatch(setSelectedUser(user));
+                  setQuery("");
+                  setSearch(false);
+                }}
                 key={user._id}
-                className="w-[40px] h-[40px] rounded-full flex justify-center items-center overflow-hidden"
+                className="w-[95%] h-[60px] flex justify-start items-center gap-4 bg-white shadow-gray-600 rounded-full shadow-md p-2 hover:bg-blue-300 cursor-pointer"
               >
-                <img
-                  src={user?.profilepic || dp}
-                  alt="dp Image"
-                  className="w-full h-full  "
-                />
+                <div className="relative rounded-full mt-2  shadow-gray-600  shadow-lg  flex items-center justify-center">
+                  <div
+                    key={user._id}
+                    className="w-[40px] h-[40px] rounded-full flex justify-center items-center overflow-hidden"
+                  >
+                    <img
+                      src={user?.profilepic || dp}
+                      alt="dp Image"
+                      className="w-full h-full  "
+                    />
+                  </div>
+                  {onlineUsers?.includes(user._id) && (
+                    <span className="h-[12px] w-[12px] rounded-full bg-green-500 absolute bottom-[-1px] right-[-1px] shadow-gray-600  shadow-lg "></span>
+                  )}{" "}
+                </div>
+                <h1 className="text-gray-700 text-md font-medium">
+                  {user?.name || user?.username}
+                </h1>
               </div>
-              {onlineUsers?.includes(user._id) && (
-                <span className="h-[12px] w-[12px] rounded-full bg-green-500 absolute bottom-[-1px] right-[-1px] shadow-gray-600  shadow-lg "></span>
-              )}{" "}
-            </div>
-            <h1 className="text-gray-700 text-md font-medium">
-              {user?.name || user?.username}
-            </h1>
-          </div>
-        ))}
-      </div>}
+            ))}
+        </div>
+      )}
       <div className="w-full h-[280px] px-2 bg-blue-400 rounded-b-[25%] shadow-lg  shadow-gray-300 flex flex-col gap-2  justify-center ">
         <h1 className="text-xl text-white font-semibold">Chat App</h1>
         <div className="w-full flex items-center justify-between">
@@ -130,7 +134,7 @@ function Sidebar() {
             </div>
           )}
           {search && (
-            <form className="w-full mt-2 h-[50px] bg-white shadow-gray-500 relative rounded-full overflow-hidden shadow-lg flex items-center gap-2 px-2">
+            <form className="w-full mt-2 h-[50px] bg-white  relative rounded-full overflow-hidden  flex items-center gap-2 px-2">
               <IoIosSearch className="h-[20px] w-[20px]" />
               <input
                 type="text"
@@ -141,8 +145,9 @@ function Sidebar() {
               />
               <RxCross1
                 className="h-[20px] w-[20px] cursor-pointer"
-                onClick={() => {setSearch(false)
-                  setQuery("")
+                onClick={() => {
+                  setSearch(false);
+                  setQuery("");
                 }}
               />
             </form>

@@ -27,6 +27,7 @@ function MessageArea() {
   const [input, setInput] = useState("");
   const [frontendImage, setFrontendImage] = useState(null);
   const [backendImage, setBackendImage] = useState(null);
+
   const imageRef = useRef();
 
   const navigate = useNavigate();
@@ -128,7 +129,7 @@ function MessageArea() {
                     key={mess._id}
                     message={mess?.message}
                     image={mess?.image}
-                  />
+                  /> 
                 ) : (
                   <RecieverMessage
                     key={mess._id}
