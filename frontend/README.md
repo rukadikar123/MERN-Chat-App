@@ -2,7 +2,7 @@
 
 # Real-time Chat App (Frontend)
 
-(DeployedLink)[https://mern-chat-app-1-98ek.onrender.com]
+[DeployedLink](https://mern-chat-app-1-98ek.onrender.com)
 
 A real-time chat application built with **React**, **Redux Toolkit**, **Vite**, and **Socket.IO**. This frontend connects to a backend API for authentication, messaging, and user management.
 
