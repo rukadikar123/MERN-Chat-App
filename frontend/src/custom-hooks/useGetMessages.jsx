@@ -16,7 +16,7 @@ import { setMessages } from '../Redux/MessageSlice.js'
           try {
               let result=await axios.get(`${import.meta.env.VITE_API_URL}/api/message/get/${selectedUser._id}`,{withCredentials:true})
               dispatch(setMessages(result?.data?.messages))
-              console.log(`data in getmessage hook : ${result?.data}`);
+              console.log("data in getmessage hook :" ,result?.data);
               
           } catch (error) {
               console.log(error);

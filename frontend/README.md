@@ -1,12 +1,116 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Real-time Chat App (Frontend)
 
-Currently, two official plugins are available:
+(DeployedLink)[https://mern-chat-app-1-98ek.onrender.com]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A real-time chat application built with **React**, **Redux Toolkit**, **Vite**, and **Socket.IO**. This frontend connects to a backend API for authentication, messaging, and user management.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Table of Contents
+
+- [Features](#features)
+- [Redux Slices](#redux-slices)
+- [Custom Hooks](#custom-hooks)
+- [Components](#components)
+- [Pages](#pages)
+- [Socket.IO Integration](#socketio-integration)
+
+---
+
+
+## Features
+
+- User authentication (signup, login, logout)
+- Real-time messaging with Socket.IO
+- Profile management (update name, profile picture)
+- Online users indicator
+- Search users
+- Image sharing in chat
+- Responsive UI
+
+---
+
+
+## Redux Slices
+
+### UserSlice.js
+
+Manages user-related state:  
+- `userData`, `otherUsers`, `selectedUser`, `socket`, `onlineUsers`, `searchData`.
+
+**Actions:**  
+- `setUserData`, `setOtherUsers`, `setSelectedUser`, `setSocket`, `setOnlineUsers`, `setSearchData`
+
+### MessageSlice.js
+
+Manages chat messages.
+
+**Actions:**  
+- `setMessages`
+
+### store.js
+
+Configures the Redux store with `user` and `message` reducers.
+
+---
+
+## Custom Hooks
+
+- **useGetCurrentUser**: Fetches the current logged-in user and updates Redux.
+- **useGetOtherUsers**: Fetches all users except the current user.
+- **useGetMessages**: Fetches messages for the selected user.
+
+---
+
+
+## Components
+
+### Sidebar.jsx
+
+- Displays user info, online users, search bar, and user list.
+- Handles logout and user selection.
+
+### MessageArea.jsx
+
+- Shows chat messages with the selected user.
+- Supports sending text and image messages.
+- Emoji picker integration.
+
+### SenderMessage.jsx & RecieverMessage.jsx
+
+- Render messages sent and received, with profile pictures.
+
+---
+
+
+## Pages
+
+### Home.jsx
+
+- Main chat layout with Sidebar and MessageArea.
+
+### Login.jsx
+
+- User login form.
+
+### Signup.jsx
+
+- User registration form.
+
+### Profile.jsx
+
+- Update profile name and picture.
+
+---
+
+
+## Socket.IO Integration
+
+- Socket is initialized in `App.jsx` when the user is logged in.
+- Listens for online users and new messages.
+- Cleans up socket on logout or user change.
+
+---
