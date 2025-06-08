@@ -3,9 +3,10 @@ import User from "../Models/UserModel.js";
 
 export const isLoggedIn = async (req, res, next) => {
   try {
+    // Get JWT token from cookies
     const token = req?.cookies?.jwt;
-    
 
+    // If token is not present, user is not authorized
     if (!token) {
       return res.status(400).json({
         success: false,
@@ -13,11 +14,13 @@ export const isLoggedIn = async (req, res, next) => {
       });
     }
 
+    // Verify the token using JWT secret
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
     if (!decodedToken) {
       return res.status(400).json({
         success: false,
-        message: "Unauthorize-Invalid token", 
+        message: "Unauthorize-Invalid token",
       });
     }
 
@@ -26,7 +29,9 @@ export const isLoggedIn = async (req, res, next) => {
       return res
         .status(401)
         .json({ success: false, message: "User not found" });
+    // Attach user info to request object for use in next middleware/routes
     req.user = user;
+    // Proceed to next middleware or route handler
     next();
   } catch (error) {
     res.status(400).json({

@@ -1,24 +1,26 @@
 import axios from "axios";
 import { useState } from "react";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUserData } from "../Redux/UserSlice";
 
 function Signup() {
+  // Local state for form inputs, loading status, and error message
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, SetLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   const navigate = useNavigate();
-  const dispatch=useDispatch()
+  const dispatch = useDispatch(); // to update Redux state
 
+  // Handles the form submission for signup
   const handleSignup = async (e) => {
     SetLoading(true);
     e.preventDefault();
     try {
+      // Send signup data to the server
       let result = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/auth/register`,
         {
@@ -28,9 +30,11 @@ function Signup() {
         },
         { withCredentials: true }
       );
-      dispatch(setUserData(result?.data))
-      navigate('/profile')
-      console.log(result);
+
+      // On successful signup, update Redux with user data and redirect
+      dispatch(setUserData(result?.data));
+      navigate("/profile");
+      // Reset form state
       SetLoading(false);
       setEmail("");
       setUserName("");
@@ -38,6 +42,7 @@ function Signup() {
       setError(null);
     } catch (error) {
       console.log(error);
+      // If error occurs, show the error message
       SetLoading(false);
       setError(error?.response?.data?.message);
     }
@@ -46,15 +51,18 @@ function Signup() {
   return (
     <div className="w-full h-[100vh] bg-slate-200  flex items-center justify-center">
       <div className="w-full max-w-[500px] h-[600px] flex flex-col gap-10 bg-white rounded-lg shadow-lg shadow-gray-400">
+        {/* Header section with title */}
         <div className="w-full h-[180px] bg-blue-400 rounded-b-[25%] shadow-lg shadow-gray-400 flex items-center justify-center">
           <h1 className="text-3xl font-bold text-gray-700">
             Welcome To Chat App
           </h1>
         </div>
+        {/* Signup form */}
         <form
           onSubmit={handleSignup}
           className="w-full flex flex-col gap-4 items-center p-2 "
         >
+          {/* Username input */}
           <input
             value={userName}
             onChange={(e) => {
@@ -65,6 +73,7 @@ function Signup() {
             placeholder="UserName"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700"
           />
+          {/* Email input */}
           <input
             value={email}
             onChange={(e) => {
@@ -75,6 +84,7 @@ function Signup() {
             placeholder="Email"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700"
           />
+          {/* Password input */}
           <input
             value={password}
             onChange={(e) => {
@@ -85,7 +95,9 @@ function Signup() {
             placeholder="Password"
             className="w-[90%] h-[40px] border-2 border-blue-400 rounded-md outline-none p-3 bg-white shadow-lg shadow-gray-300 focus:border-blue-700 "
           />
+          {/* Error display */}
           {error && <p className="text-red-600">{error}</p>}
+          {/* Submit button */}
           <button
             type="submit"
             disabled={loading}
@@ -93,6 +105,7 @@ function Signup() {
           >
             {loading ? "Loading...." : "SignUp"}
           </button>
+          {/* Redirect to login if already registered */}
           <p className="text-md">
             Already Have An Account ?{" "}
             <span
