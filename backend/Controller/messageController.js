@@ -14,7 +14,7 @@ export const sendMessage = async (req, res) => {
     let image;
     if (req.file) {
       // If a file (image) is sent with the message, upload it to Cloudinary
-      image = await uploadOnCloudinary(req.file.path);
+      image = await uploadOnCloudinary(req.file.path) || ""
     }
 
     // 🔍 Find existing conversation between sender and receiver
