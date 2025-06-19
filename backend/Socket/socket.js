@@ -16,7 +16,7 @@ const io = new Server(server, {
   },
 });
 
-// In-memory map to track users and their socket IDs
+// Object to track users and their socket IDs
 const userSocketMap = {};
 
 // Utility function to get a receiver's socket ID by their user ID
